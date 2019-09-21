@@ -6,11 +6,11 @@ import { actionCreators as mumuAction } from '../../reducer';
 //! state는 provider store에서 자동으로 state를 복사하기때문에 거기서 가져온거임.
 
 function mapStateToProp(state){
-  const { isPlaying, elapsedTime, timeDuration} = state;
+  const { isPlaying, elapsedTime, timerDuration} = state;
   return {
     isPlaying,
     elapsedTime,
-    timeDuration
+    timerDuration
   }
 }
 
@@ -20,7 +20,7 @@ function mapDispatchToProps(dispatch){
   return {
     startTimer: bindActionCreators(mumuAction.startTimer, dispatch),
     restartTimer: bindActionCreators(mumuAction.restartTimer, dispatch),
-    addSecond: bindActionCreator(mumuAction.addSecond, dispatch)
+    addSecond: bindActionCreators(mumuAction.addSecond, dispatch)
   }
 }
 

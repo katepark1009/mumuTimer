@@ -29,13 +29,14 @@ function addSecond(){
 
 const TIME_DURATION = 1500;
 
-const initialState = {
+const initialState = { //shape of state
   isPlaying: false,
   elapsedTime: 0,
   timerDuration: TIME_DURATION
 }
 
-function reducer(state=initialState, action){
+
+function reducer(state=initialState, action){ //transformation
   switch(action.type){
     case STAMP_TIMER : 
       return applyStartTimer(state);
