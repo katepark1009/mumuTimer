@@ -1,43 +1,32 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, StatusBar } from 'react-native';
-import Button from '../Button';
-class Timer extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <StatusBar barStyle={"light-content"} />
-        <View style={styles.upper}>
-          <Text style={styles.text}>23:00</Text>
-        </View>
-        <View style={styles.lower}>
-          <Button iconName="play-circle" onPress={()=>alert("work")}/>
-          <Button iconName="stop-circle" onPress={()=>alert("work")}/>
-        </View>
-      </View>
-    )
+import { connect } from 'react-redux';
+import Timer from './presenter';
+import { bindActionCreators } from 'redux';
+import { actionCreators as mumuAction } from '../../reducer';
+
+//! state는 provider store에서 자동으로 state를 복사하기때문에 거기서 가져온거임.
+
+function mapStateToProp(state){
+  const { isPlaying, elapsedTime, timeDuration} = state;
+  return {
+    isPlaying,
+    elapsedTime,
+    timeDuration
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#ff1a75"
-  },
-  upper: {
-    flex: 2,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  text : {
-    fontSize: 120,
-    fontWeight: "100",
-    color: "white"
-  },
-  lower: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  }
-})
 
-export default Timer;
+//! dispatch는 액션을 리듀서로 보내는 function.
+function mapDispatchToProps(dispatch){
+  return {
+    startTimer: bindActionCreators(mumuAction.startTimer, dispatch),
+    restartTimer: bindActionCreators(mumuAction.restartTimer, dispatch),
+    addSecond: bindActionCreator(mumuAction.addSecond, dispatch)
+  }
+}
+
+
+
+
+export default connect(mapStateToProp, mapDispatchToProps)(Timer);
+
+//! index에서는 state에서 데이터 가져오는 것 관리함
